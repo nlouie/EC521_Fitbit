@@ -7,7 +7,8 @@
 ## Fitbit's Attack Surface
 
 ####  Misc Links
-https://bugcrowd.com/fitbit
+[BugCrowd](https://bugcrowd.com/fitbit)
+[Fitbit in Academia](http://www.academia.edu/Documents/in/Fitbit)
 
 
 ### Bluetooth
@@ -103,6 +104,7 @@ Access tokens from the Implicit Grant Flow are longer lived than tokens from the
 
 [\[Fitbit\] Fitbit Api Access using Oauth2.0](http://pdwhomeautomation.blogspot.co.uk/2016/01/fitbit-api-access-using-oauth20-and.html)
 
+ [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
 
 Info an app could get about a user:
 
