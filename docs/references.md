@@ -47,7 +47,7 @@ https://thestack.com/security/2015/10/21/fitbits-open-bluetooth-port-enables-rap
 - [\[Secure List\] - How I Hacked my Smart Bracelet](https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/)
         Researcher claims to have done it.
 
-- [\[CBC\] - Some Fitness Trackers Vulnerable to Monitoring (http://www.cbc.ca/news/technology/fitness-trackers-monitoring-users-1.3428817)
+- [\[CBC\] - Some Fitness Trackers Vulnerable to Monitoring] (http://www.cbc.ca/news/technology/fitness-trackers-monitoring-users-1.3428817)
 	
 
 ##### Bottom Line
