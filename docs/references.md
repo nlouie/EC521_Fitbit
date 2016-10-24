@@ -47,6 +47,9 @@ https://thestack.com/security/2015/10/21/fitbits-open-bluetooth-port-enables-rap
 - [\[Secure List\] - How I Hacked my Smart Bracelet](https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/)
         Researcher claims to have done it.
 
+- [\[CBC\] - Some Fitness Trackers Vulnerable to Monitoring (http://www.cbc.ca/news/technology/fitness-trackers-monitoring-users-1.3428817)
+	
+
 ##### Bottom Line
 
 So it seems like there is conflicting opinions. Fitbit says that there is no significant bluetooth vulnerability since the 17 bytes can’t do anything and also said this theoretical issue has been patched, but other reports show this has not been patched and current vulnerabilities show we can change the number of steps..
