@@ -32,6 +32,7 @@ We plan on researching vulnerability in Fitbit’s attack surface including:
 A list of the five most relevant references that you have found to the background you need for the project. Ideally, these references should be from high-quality, reputable sources (books with known publishers, peer-reviewed papers, established conference proceedings, specification pages of well-established companies) - not from unreviewed or weakly reviewed web content (e.g. wikipedia). They should also be specific enough to be useful (e.g. "Wall Street Journal, October 5, 2016, Twitter Sale Nears As Bids Come Due " rather than just "The Wall Street Journal").
 
 ##### USB - Inna
+- [Sample Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
 
 ##### Bluetooth - Satoe
 
