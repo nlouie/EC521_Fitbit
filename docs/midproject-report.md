@@ -35,6 +35,7 @@ A list of the five most relevant references that you have found to the backgroun
 - [Sample Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
 
 ##### Bluetooth - Satoe
+- [MIT](Fitbit)](https://courses.csail.mit.edu/6.857/2014/files/17-cyrbritt-webbhorn-specter-dmiao-hacking-fitbit.pdf)
 
 ##### Android App - Brett
 
