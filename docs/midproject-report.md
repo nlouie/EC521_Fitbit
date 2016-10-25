@@ -5,7 +5,7 @@
 [Fitbit Cyber Project on Github](https://github.com/ssakuma4593/EC521_Fitbit)
 
 ### Created: 10/10/16
-### Last Updated: 10/23/16
+### Last Updated: 10/25/16
 
 #### Required elements
 You need to provide sufficient evidence that you have thought through how to complete the project, and that I can use to assess the appropriateness of its scope and technical merits. To this end, your report topic should contain:
