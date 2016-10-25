@@ -48,9 +48,13 @@ A list of the five most relevant references that you have found to the backgroun
 A tentative schedule of goals and deadlines leading up to the project’s completion, and the envisioned role of each person in the group. Although some members may have managerial or documentation roles, every member must also have a substantive technical contribution to the project.
 
 September 28: GroupSelection. [5 points]
+
 September 30: Project selection. [5 points]
+
 October 26: MidProjectReport. [15 points]
+
 November 30: Final report due. [35 points]
+
 December 5, 7, 12: Group presentations. [40 points]
 
 **October 11** - Research attack vectors (start understanding phase)
