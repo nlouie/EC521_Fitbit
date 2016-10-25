@@ -2,7 +2,7 @@
 ### EC521 Cyber Security Project Fall 2016
 ###  Mid Project Report
 ### Group 3 - Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky
-[Fitbit Cyber Project on Github(https://github.com/ssakuma4593/EC521_Fitbit)
+[Fitbit Cyber Project on Github](https://github.com/ssakuma4593/EC521_Fitbit)
 
 ### Created: 10/10/16
 ### Last Updated: 10/23/16
@@ -85,8 +85,11 @@ _(Meet sometime)_
 _(Meet sometime in between)_
 
 **November 27** - Finish most of the report
+
 **November 29** - Panic, stay up all night and finish the project
+
 **November 30** - Submit Final Report
+
 **Nov 30** -> Prepare for Group Presentation
 
 ###### Envisioned roles
