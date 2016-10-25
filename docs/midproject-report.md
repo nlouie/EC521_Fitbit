@@ -38,9 +38,7 @@ A list of the five most relevant references that you have found to the backgroun
 ##### Android App - Brett
 
 ##### API - Nick
-- [\[Fitbit\] Fitbit Api Access using Oauth2.0](http://pdwhomeautomation.blogspot.co.uk/2016/01/fitbit-api-access-using-oauth20-and.html)
 - [API Docs](https://dev.fitbit.com/docs/)
-- [Terms of use](https://dev.fitbit.com/terms/)
 - [Fitbit Scraper](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
 
 ##  Schedule
