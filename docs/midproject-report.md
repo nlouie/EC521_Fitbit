@@ -38,6 +38,7 @@ A list of the five most relevant references that you have found to the backgroun
 - [MIT](https://courses.csail.mit.edu/6.857/2014/files/17-cyrbritt-webbhorn-specter-dmiao-hacking-fitbit.pdf)
 
 ##### Android App - Brett
+- [Reverse-Engineering an Android App](http://securitywatch.pcmag.com/mobile-security/321138-rsac-reverse-engineering-an-android-app-in-five-minutes)
 
 ##### API - Nick
 - [API Docs](https://dev.fitbit.com/docs/)
