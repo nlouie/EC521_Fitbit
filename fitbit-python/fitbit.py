@@ -1,6 +1,7 @@
 """
 fitbit.py
-BU EC521
+BU EC521 Fall 2016
+Project Group 3
 nlouie@bu.edu
 
 This script takes the authorized fitbit user code and scrapes the user's data by making a series of GET requests.
@@ -14,15 +15,26 @@ After that, the server now has access to the user's data.
 
 Works only for authorization code flow!
 
-The authorization links to my shared hosting, but will return a 404.
+Usage:
 
-Authorization URL:
+Click the below Authorization URL:
 
 https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228349&redirect_uri=https%3A%2F%2Fjudgementalmom.com%2Ffitbit&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800
 
 or make a curl
 
 curl -X POST -i -H 'Authorization: Basic MjI4MzQ5OjdkMzJmMDMwNzRhMmQ5ODJkNjM3ZjhhYjFhZjBiNmZl' -H 'Content-Type: application/x-www-form-urlencoded' -d "clientId=228349" -d "grant_type=authorization_code" -d "redirect_uri=https%3A%2F%2Fjudgementalmom.com%2Ffitbit" -d "code=0716ea988383f3c400e21adbfe70902293218dcc" https://api.fitbit.com/oauth2/token
+
+The authorization links to my shared hosting, but will return a 500 error. Look at your URL header to see your code!!!
+
+This is for use by Team members only.
+If you would like to use this for your own Fitbit app, simply replace your authorization code in global_headers,
+and your redirect_uri in oauth_request_data.
+
+When you run this, you are using this script at your own discretion. We hold no warranty for this script. If you are not
+redirecting to a secure server (if no https), then you may expose your sensitive information as this app requests for
+a maximum amount of informational access to your fitbit account. You should never use this on anyone's account you
+do not have permission to use.
 
 More info about authentication:
 
@@ -34,25 +46,26 @@ https://dev.fitbit.com/docs/oauth2/
 # -------------------- IMPORTS --------------------------------------------#
 
 import requests
-from json import load
+from json import load, dumps
 
 
 # --------------------- GLOBALS --------------------------------------------#
 
-# final extracted returned data
-FINAL_OUTPUT = {}
-
 # Build authentication POST
 
 # secrets are no fun
-code = "7e68eacf8234b7d7717162822fe4e6c66a0dabb6"
-client_secret = load(open('auth.json', 'r'))['fitbit-secret']
+# !!!!!!!!!!!!!!!!!!!!  COPY HERE !!!!!!!!!!!!!!!
+CODE = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # copy your code here if you want extract yourself!!!!! :D
+CLIENT_SECRET = load(open('auth.json', 'r'))['fitbit-secret']
+
+# final extracted returned data
+FINAL_OUTPUT = {}
 
 # Use this URL to refresh the access token
-TokenURL = "https://api.fitbit.com/oauth2/token"
+TOKEN_URL = "https://api.fitbit.com/oauth2/token"
 
 global_headers = {
-    'Authorization': 'Basic MjI4MzQ5OjdkMzJmMDMwNzRhMmQ5ODJkNjM3ZjhhYjFhZjBiNmZl',
+    'Authorization': load(open('auth.json', 'r'))['authorization'],
     'Content-Type': 'application/x-www-form-urlencoded',
 }
 
@@ -60,7 +73,7 @@ oauth_request_data = {
   'clientId': load(open('auth.json', 'r'))['client-id'],
   'grant_type': 'authorization_code',
   'redirect_uri': 'https://judgementalmom.com/fitbit',
-  'code': code
+  'code': CODE
 }
 
 # All the api endpoints for extraction of user data. note that we are using a static date, 2016-10-30 for proof
@@ -76,9 +89,8 @@ EXTRACTION_URLS = {
     'devices_data': 'https://api.fitbit.com/1/user/{0}/devices.json',
     'weight_data': 'https://api.fitbit.com/1/user/{0}/body/log/weight/date/2016-10-30.json',
     'food_data': 'https://api.fitbit.com/1/user/{0}/foods/log/date/2016-10-30.json',
-    'friends_data':'https://api.fitbit.com/1/user/[user-id]/friends.json',
+    'friends_data': 'https://api.fitbit.com/1/user/[user-id]/friends.json',
 }
-
 
 # ----------------- FUNCTIONS --------------------------------------------#
 
@@ -91,7 +103,7 @@ def get_new_access_token(refresh_token):
     """
     data = {'grant_type': 'refresh_token',
             'refresh_token': refresh_token}
-    r = requests.post(TokenURL, headers=global_headers, data=data)
+    r = requests.post(TOKEN_URL, headers=global_headers, data=data)
     access_token = r.json()['access_token']
     refresh_token = r.json()['refresh_token']
     return access_token, refresh_token
@@ -125,6 +137,7 @@ def extract(access_token, refresh_token, user_id):
     data = {}
     # Make a call for each API endpoint
     for key in EXTRACTION_URLS:
+        print("\textracting " + str(key) + "...")
         # set up the request
         url = EXTRACTION_URLS[key]
         # make the request
@@ -136,17 +149,30 @@ def extract(access_token, refresh_token, user_id):
 
 
 def main():
-    r = requests.post(TokenURL, headers=global_headers, data=oauth_request_data)
+    """
+    Bottom method.
+    :return: -o output.txt by default.
+    """
+    print("Authenticating...\n")
+    r = requests.post(TOKEN_URL, headers=global_headers, data=oauth_request_data)
     oauth_data = r.json()
     if 'errors' not in oauth_data:
         access_token = oauth_data['access_token']
         user_id = oauth_data['user_id']
         refresh_token = oauth_data['refresh_token']
+        print("Extracting...\n")
         extract(access_token, refresh_token, user_id)
-        print(FINAL_OUTPUT)
+        print(dumps(FINAL_OUTPUT, sort_keys=True, indent=4))
+        # output to text..
+        print("Output: ------------------------------------------------\n")
+        with open('output.txt', 'w') as f:
+            f.write(str(dumps(FINAL_OUTPUT, sort_keys=True, indent=4)))
     else:
         print('error in oauth', oauth_data)
 
+# basic security
+if not oauth_request_data['redirect_uri'].startswith("https://"):
+    raise Exception("NOPE")
 
 main()
 
