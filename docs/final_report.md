@@ -21,6 +21,8 @@ Fitbit - Group 3 (Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky)
 ##### Bluetooth - Satoe
 - [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf) </br>
 Hilts, Andrew (February 2, 2016). Every Step You Fake: A Comparative Analysis of Fitness Tracker Privacy and Security. The Citizen Lab. Retrieved from https://citizenlab.org/2016/02/fitness-tracker-privacy-and-security/
+- [Hacktivity: 10 Second Hack] (https://www.framadrive.org/index.php/s/7Xal6WfggnFxSFY) </br>
+Avrille, Axelle (October 22, 2015). Fitbits Can be Hacked to Spew Malware, Security Expert Warns. Wired. Retrieved from http://www.wired.co.uk/article/fitbit-hack-malware-ten-seconds
 - [Securelist: Hacking Fitbit] (https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/) </br>
 Unucheck, Roman (March 26, 2015). How I Hacked My Smart Bracelet. SecureList. Retrieved from https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/
 
@@ -283,7 +285,9 @@ The attacker that has paired to the victim's Fitbit through bluetooth, they can 
 
 Bluetooth is most vulnerable for exploitation when it is not paired. Users may be trying to save battery or assume that once the Fitbit device is done syncing, they do not need to keep bluetooth enabled. However, the Fitbit device will revert to "advertising mode" and repeatedly emits a fixed signal and unique ID to alert the phone that it is waiting to re-establish a connection. During this 'advertising mode,' attackers are free to pair with the device and cause disturbance in re-establishing connection with the users' device. 
 
-#### Scanning for Devices
+#### Bluetooth Hacking
+
+##### Scanning
 Unucheck used ready code from Android SDK, which is an application to connect to Bluetooth LE devices. 
 Kali Linux comes with Bluesnarfer, which scans bluetooth devices. This can be done with a bluetooth dongle by:
 
@@ -291,7 +295,7 @@ Kali Linux comes with Bluesnarfer, which scans bluetooth devices. This can be do
     -hcitool scan hci0
     -l2ping (device addr)
 
-#### Authentication
+##### Authentication
 In the real authentication process between the Fitbit device and the user, the Fitbit application uses one of the four service located in the wristband. To notify the Fitbit device of any changes made to the characteristic, each characteristic has a flag called 'CharacteristicNotification'. This also goes for the descriptors for each characteristics, with the flag 'ENABLE_NOTIFICATION_VALUE' .
 
 When one of the characteristics' value is changed through the byte buffer, the application reads the buffer containing the header and byte array and initializes a new array. This new array consists of a constant array within the application, followed by the header and byte array that it read from the buffer. The new array is MD5 hashed and sent to the Fitbit device, to which the device responds in this format.
@@ -303,3 +307,17 @@ When one of the characteristics' value is changed through the byte buffer, the a
 This will cause the Fitbit Device to vibrate and request the user to tap the screen to finish the authentication. Due to the fact that authentication requires just one tap from the user, one attack method could be to repeatedly try the authentication process within range. 
 
 After the authentication is complete, data on the Fitbit device can be accessed. However, something to note is that once an hour the device transfers information to the cloud, which means some of the information going back may not be accessible.
+
+##### Potential Malicious Actions
+Aside from modifying data of steps and distances, Avrille claimed as a proof of concept that the atacker could inject a malicious code into the tracker which only required 10 seconds, with an verification time of 60 seconds (timed to a jog of the victim). Only the initial injection requires that the Fitbit device be near the attacker. The verification can happen even when the victim is out of reach. 
+
+When the victim wants to syncrhonize their data to update their profile, the device will respond. However, added to the original message, the response will be infiltrated with the infected packet, which will then be delivered to the victim's laptop or mobile device. This could then start a back door and even infect other trackers. 
+
+Although the payload is small, just a mere 17 bytes, it is enough for a Trojan such as the Crash Pentium Trojan in 2004, which only required 4 bytes. 
+
+#### Fitbit's Reponse
+Fitbit claimed that these claims were false and cannot be reproduced.
+
+`On Wednesday October 21, 2015, reports began circulating in the media based on claims from security vendor, Fortinet, that Fitbit devices could be used to distribute malware. These reports are false. In fact, the Fortinet researcher, Axelle Apvrille who originally made these claims has confirmed to Fitbit that this was only a theoretical scenario and is not possible. Fitbit trackers cannot be used to infect user’s devices with malware. We want to reassure our users that it remains safe to use their Fitbit devices and no action is required.
+
+
