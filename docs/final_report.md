@@ -318,6 +318,6 @@ Although the payload is small, just a mere 17 bytes, it is enough for a Trojan s
 #### Fitbit's Reponse
 Fitbit claimed that these claims were false and cannot be reproduced.
 
-`On Wednesday October 21, 2015, reports began circulating in the media based on claims from security vendor, Fortinet, that Fitbit devices could be used to distribute malware. These reports are false. In fact, the Fortinet researcher, Axelle Apvrille who originally made these claims has confirmed to Fitbit that this was only a theoretical scenario and is not possible. Fitbit trackers cannot be used to infect user’s devices with malware. We want to reassure our users that it remains safe to use their Fitbit devices and no action is required.
+>On Wednesday October 21, 2015, reports began circulating in the media based on claims from security vendor, Fortinet, that Fitbit devices could be used to distribute malware. These reports are false. In fact, the Fortinet researcher, Axelle Apvrille who originally made these claims has confirmed to Fitbit that this was only a theoretical scenario and is not possible. Fitbit trackers cannot be used to infect user’s devices with malware. We want to reassure our users that it remains safe to use their Fitbit devices and no action is required.
 
 
