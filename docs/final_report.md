@@ -19,7 +19,10 @@ Fitbit - Group 3 (Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky)
 - [Sample USB Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
 
 ##### Bluetooth - Satoe
-- [MIT Hacking Fitbit](https://courses.csail.mit.edu/6.857/2014/files/17-cyrbritt-webbhorn-specter-dmiao-hacking-fitbit.pdf)
+- [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf) </br>
+Hilts, Andrew (February 2, 2016). Every Step You Fake: A Comparative Analysis of Fitness Tracker Privacy and Security. The Citizen Lab. Retrieved from https://citizenlab.org/2016/02/fitness-tracker-privacy-and-security/
+- [Securelist: Hacking Fitbit] (https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/) </br>
+Unucheck, Roman (March 26, 2015). How I Hacked My Smart Bracelet. SecureList. Retrieved from https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/
 
 ##### Android App - Brett
 - [Reverse-Engineering an Android App](http://securitywatch.pcmag.com/mobile-security/321138-rsac-reverse-engineering-an-android-app-in-five-minutes)
