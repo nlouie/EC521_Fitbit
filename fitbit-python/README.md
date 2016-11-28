@@ -232,7 +232,8 @@ Works only for authorization code flow!
 
 - [API Docs](https://dev.fitbit.com/docs/)
 - [Fitbit oauth](https://dev.fitbit.com/docs/oauth2/)
-- [Terms of use](https://dev.fitbit.com/terms/)
-- [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
-- [CWE API Abuse](https://cwe.mitre.org/data/definitions/227.html)
 - [Programmable Web Fitbit API](http://www.programmableweb.com/api/fitbit))
+- [Terms of use](https://dev.fitbit.com/terms/)
+- [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
+- [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
+
