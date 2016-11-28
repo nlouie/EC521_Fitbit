@@ -2,10 +2,10 @@
 ### EC521 Cyber Security Project Fall 2016
 ###  Mid Project Report
 ### Group 3 - Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky
-[Fitbit Cyber Project on Github(https://github.com/ssakuma4593/EC521_Fitbit)
+[Fitbit Cyber Project on Github](https://github.com/ssakuma4593/EC521_Fitbit)
 
 ### Created: 10/10/16
-### Last Updated: 10/23/16
+### Last Updated: 10/25/16
 
 #### Required elements
 You need to provide sufficient evidence that you have thought through how to complete the project, and that I can use to assess the appropriateness of its scope and technical merits. To this end, your report topic should contain:
@@ -32,24 +32,29 @@ We plan on researching vulnerability in Fitbit’s attack surface including:
 A list of the five most relevant references that you have found to the background you need for the project. Ideally, these references should be from high-quality, reputable sources (books with known publishers, peer-reviewed papers, established conference proceedings, specification pages of well-established companies) - not from unreviewed or weakly reviewed web content (e.g. wikipedia). They should also be specific enough to be useful (e.g. "Wall Street Journal, October 5, 2016, Twitter Sale Nears As Bids Come Due " rather than just "The Wall Street Journal").
 
 ##### USB - Inna
+- [Sample Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
 
 ##### Bluetooth - Satoe
+- [MIT](https://courses.csail.mit.edu/6.857/2014/files/17-cyrbritt-webbhorn-specter-dmiao-hacking-fitbit.pdf)
 
 ##### Android App - Brett
+- [Reverse-Engineering an Android App](http://securitywatch.pcmag.com/mobile-security/321138-rsac-reverse-engineering-an-android-app-in-five-minutes)
 
 ##### API - Nick
-- [\[Fitbit\] Fitbit Api Access using Oauth2.0](http://pdwhomeautomation.blogspot.co.uk/2016/01/fitbit-api-access-using-oauth20-and.html)
 - [API Docs](https://dev.fitbit.com/docs/)
-- [Terms of use](https://dev.fitbit.com/terms/)
 - [Fitbit Scraper](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
 
 ##  Schedule
 A tentative schedule of goals and deadlines leading up to the project’s completion, and the envisioned role of each person in the group. Although some members may have managerial or documentation roles, every member must also have a substantive technical contribution to the project.
 
 September 28: GroupSelection. [5 points]
+
 September 30: Project selection. [5 points]
+
 October 26: MidProjectReport. [15 points]
+
 November 30: Final report due. [35 points]
+
 December 5, 7, 12: Group presentations. [40 points]
 
 **October 11** - Research attack vectors (start understanding phase)
@@ -84,8 +89,11 @@ _(Meet sometime)_
 _(Meet sometime in between)_
 
 **November 27** - Finish most of the report
+
 **November 29** - Panic, stay up all night and finish the project
+
 **November 30** - Submit Final Report
+
 **Nov 30** -> Prepare for Group Presentation
 
 ###### Envisioned roles
@@ -109,7 +117,5 @@ What are the interesting cybersecurity technical challenges involved in bringing
 ### Comments
 A place at the bottom of the topic, where I can provide feedback as appropriate.
 
-```
-You guys are great!!!! - AT
-A+
+
 ```
