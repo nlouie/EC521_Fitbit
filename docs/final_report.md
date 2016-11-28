@@ -28,7 +28,7 @@ Fitbit - Group 3 (Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky)
 
 - [Fitbit API Docs](https://dev.fitbit.com/docs/)
 - [Terms of use](https://dev.fitbit.com/terms/)
-- [Programmable Web Fitbit API](http://www.programmableweb.com/api/fitbit))
+- [Programmable Web Fitbit API](http://www.programmableweb.com/api/fitbit)
 - [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
 - [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
 
