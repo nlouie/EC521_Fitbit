@@ -258,7 +258,7 @@ That is, unless a MITM sends you an alternate, working key...
 You should see the extraction results in output.txt and in your console.
 
 If you recieve an error with oauth then the token may be expired.
-
+    
 ##### Disclaimer 
 
 This is for use by Team members only. If you would like to use this for your own Fitbit app, simply replace your authorization code in global_headers,
@@ -274,5 +274,32 @@ Fitbit should be more open to bug bounty collectors, otherwise malicious actors 
 
 
 
+#### Bluetooth Attack Surface
+Similar to the API Attack Surface, spoofing bluetooth pairing between a Fitbit device and a laptop or mobile will allow the attacker to have access to vital signs, calories burned, sleep activity, geolocation, phone serial number IMEI Number, steps per interval, and 
+reproductive health information. 
 
+#### Bluetooth Motivation
+The attacker that has paired to the victim's Fitbit through bluetooth, they can gather information on the victim, but also manipulate the information stored on the device. Although damage is minimal, information leaks still violate users' prviacy.
 
+Bluetooth is most vulnerable for exploitation when it is not paired. Users may be trying to save battery or assume that once the Fitbit device is done syncing, they do not need to keep bluetooth enabled. However, the Fitbit device will revert to "advertising mode" and repeatedly emits a fixed signal and unique ID to alert the phone that it is waiting to re-establish a connection. During this 'advertising mode,' attackers are free to pair with the device and cause disturbance in re-establishing connection with the users' device. 
+
+#### Scanning for Devices
+Unucheck used ready code from Android SDK, which is an application to connect to Bluetooth LE devices. 
+Kali Linux comes with Bluesnarfer, which scans bluetooth devices. This can be done with a bluetooth dongle by:
+
+    -hciconfig hci0
+    -hcitool scan hci0
+    -l2ping (device addr)
+
+#### Authentication
+In the real authentication process between the Fitbit device and the user, the Fitbit application uses one of the four service located in the wristband. To notify the Fitbit device of any changes made to the characteristic, each characteristic has a flag called 'CharacteristicNotification'. This also goes for the descriptors for each characteristics, with the flag 'ENABLE_NOTIFICATION_VALUE' .
+
+When one of the characteristics' value is changed through the byte buffer, the application reads the buffer containing the header and byte array and initializes a new array. This new array consists of a constant array within the application, followed by the header and byte array that it read from the buffer. The new array is MD5 hashed and sent to the Fitbit device, to which the device responds in this format.
+
+    -Header
+    -MD5
+    -Verification byte
+
+This will cause the Fitbit Device to vibrate and request the user to tap the screen to finish the authentication. Due to the fact that authentication requires just one tap from the user, one attack method could be to repeatedly try the authentication process within range. 
+
+After the authentication is complete, data on the Fitbit device can be accessed. However, something to note is that once an hour the device transfers information to the cloud, which means some of the information going back may not be accessible.
