@@ -315,6 +315,35 @@ This does not instill a great amount of confidence in Fitbit's security procedur
 vulnerabilities.
 
 ----------------------------------------------------------
+#### Android App Attack Surface
+The Fitbit Android app allows users to view the data their Fitbit wearable tracks. This data includes both the backlogged data that gets sent to Fitbit's servers, and live data that is viewable only from the app. A user can also find friends who have Fitbits by searching through their Google or Facebook contacts if the user chooses to link those accounts to their Fitbit account.
+
+####Android App Motivation
+The Fitbit Android app has been downloaded somewhere between 10,000,000 and 50,000,000 times according to the Google Play Store. This means that a vulnerability found in the app could affect tens of millions of people. Additionally, Android apps can be reverse-engineered more easily than iOS apps, as there are many easy-to-use, publicly available decompilers.
+
+####Android App Hacking
+First we have to acquire the apk file for Fitbit's app. There are several ways to get this, but the easiest is to download it using [apkmirror](http://www.apkmirror.com/).
+
+There are two processes that should be done to reverse-engineer an Android app:
+
+- Decompile the apk into smali, which is like assembly code for java files. Make any desired changes to the smali code, and compile it back into an apk to run on an Android device. This can be done using *apktool* which is built into Kali Linux.
+
+1. `apktool d <path to fitbit.apk>`
+This will decompile the apk into smali files, and will create a directory called "fitbit" in the working directory to contain these files. It does this using baksmali (also built into Kali Linux) on the classes.dex files which can be found in the root directory of the apk. 
+Every Android app has a classes.dex file which contains the compiled machine code for app. In the case of the most recent version of fitbit's apk, there are two classes.dex files: classes.dex and classes2.dex. When multiple dex files are present, this is called "multidex", and is used in the case that the app is very large. 
+Inside the new fitbit directory there are two directories containing the smali code: smali and smali_classes2. Any modifications the hacker desires to make should be made to the files in those directories.
+2. `apktool b fitbit`
+Two new directories will be created in the fitbit directory: build and dist. They contain the unzipped and zipped versions respectively of the modified fitbit.apk.
+3. `keytool -genkey -v -keystore <key name>.keystore -alias <alias name> -keyalg RSA -keysize 2048 -validity 10000 `
+This creates a key to sign the modified apk. Without this step and the next, the phone will see the package as corrupt when installing. This step only needs to be done once, as the key can be reused.
+4. `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore <key name>.keystore fitbit/dist/fitbit.apk <alias_name>`
+This signs the apk.
+5. `zipalign -f -p 4 fitbit/dist/fitbit.apk fitbit/dist/fitbit-aligned.apk`
+This zipaligns the apk, aligned at 4 bytes.
+6. Now the apk can be transferred to an Android phone and installed via a file explorer.
+- Convert the apk to java code. This won't be fully working java code, but will be more readable than the smali code and will help in understanding what the code does. The easiest way to do this is to use an online decompiler such as [Jadx](http://www.javadecompilers.com/apk). The result will be a downloadable zip file of java code with the same file names as the smali files.
+
+-------------------------------------------------------------------------
 
 ##### Limitations
 
@@ -404,7 +433,7 @@ That is, unless a MITM sends you an alternate, working key...
 
 You should see the extraction results in output.txt and in your console.
 
-If you recieve an error with oauth then the token may be expired.
+If you receive an error with oauth then the token may be expired.
     
 ##### Disclaimer 
 
