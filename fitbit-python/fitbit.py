@@ -53,7 +53,7 @@ from json import load, dumps
 
 # secrets are no fun
 # !!!!!!!!!!!!!!!!!!!!  COPY HERE !!!!!!!!!!!!!!!
-CODE = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # copy your code here if you want extract yourself!!!!! :D
+CODE = "a8c742e7e9cf9deda3b8083b14d73fddaa9e98a2"  # copy your code here if you want extract yourself!!!!! :D
 CLIENT_SECRET = load(open('auth.json', 'r'))['fitbit-secret']
 
 # final extracted returned data
@@ -87,7 +87,9 @@ EXTRACTION_URLS = {
     'devices_data': 'https://api.fitbit.com/1/user/{0}/devices.json',
     'weight_data': 'https://api.fitbit.com/1/user/{0}/body/log/weight/date/2016-10-30.json',
     'food_data': 'https://api.fitbit.com/1/user/{0}/foods/log/date/2016-10-30.json',
-    'friends_data': 'https://api.fitbit.com/1/user/[user-id]/friends.json',
+    'friends_data': 'https://api.fitbit.com/1/user/{0}/friends.json',
+    'sleep_data': 'https://api.fitbit.com/1/user/{0}/sleep/date/2016-10-30.json',
+    'heart_data': 'https://api.fitbit.com/1/user/{0}/activities/heart/date/today/1d.json'
 }
 
 # ----------------- FUNCTIONS --------------------------------------------#
