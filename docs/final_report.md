@@ -5,7 +5,7 @@
 [Fitbit Cyber Project on Github](https://github.com/ssakuma4593/EC521_Fitbit)
 
 ### Created: 11/27/16
-### Last Updated: 11/27/16
+### Last Updated: 11/28/16
 
 ### Background
 
@@ -13,17 +13,40 @@
 
 Fitbit - Group 3 (Inna Turshudzhyan, Nick Louie, Satoe Sakuma, Brett Moretzky)
 
-#### References
+Fitness trackers are an advent of the emerging field of technology wearables and the internet of things.
+Within the competitive market of the IoT, firms typically skimp on security by concentrating resources towards functionality.
+Fitbit is no different in this sense, and must be assumed to have undisclosed security vulnerabilities that may compromise
+its users' privacy. Compared to most IoT devices such as the common IP Camera, the Fitbit is worn constantly, and contains
+several sensors to track one's movements. We believe the attack surface of fitness trackers is comparable to that of a
+smart phone, but is not as extensively evaluated for security vulnerabilities for many reasons.
+
+We have created a security assessment of possible attack vectors on the health wearable, the Fitbit. We focus on the
+vulnerabilities surrounding information gathering through API exploitation, and also touch upon other Fitbit attack vectors
+such as Bluetooth connectivity, USB connectivity, and the Fitbit Android Application. We wish to analyze potential avenues
+for attack of the Fitbit devices, and its privacy implications to its users.
+
+We have created a demonstration involving Fitbit API data scraping. The Fitbit collects a plethora of information from
+its body sensors. We have learned in Android Security that these body sensors leak a great deal of information. Luckily,
+Fitbit keeps most of this information (not real-time), and allows apps to access the data upon a user's consent.
+
+We consider the Fitbit API research to be an extension of "Security Analysis of Wearable Fitness Devices (Fitbit)" by
+Britt Cyr, Webb Horn, Daniela Miao, and Michael Specter  at Massachusetts Institute of Technology Cambridge, which can be
+found in our searches. The MIT research mentioned API vulnerabilities as an area of study that was not evaluated.
+
+#### References and Resources
 
 ##### USB - Inna
 - [Sample USB Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
 
 ##### Bluetooth - Satoe
-- [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf) </br>
+- [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf)
+
 Hilts, Andrew (February 2, 2016). Every Step You Fake: A Comparative Analysis of Fitness Tracker Privacy and Security. The Citizen Lab. Retrieved from https://citizenlab.org/2016/02/fitness-tracker-privacy-and-security/
-- [Hacktivity: 10 Second Hack] (https://www.framadrive.org/index.php/s/7Xal6WfggnFxSFY) </br>
+- [Hacktivity: 10 Second Hack] (https://www.framadrive.org/index.php/s/7Xal6WfggnFxSFY)
+
 Avrille, Axelle (October 22, 2015). Fitbits Can be Hacked to Spew Malware, Security Expert Warns. Wired. Retrieved from http://www.wired.co.uk/article/fitbit-hack-malware-ten-seconds
-- [Securelist: Hacking Fitbit] (https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/) </br>
+- [Securelist: Hacking Fitbit] (https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/)
+
 Unucheck, Roman (March 26, 2015). How I Hacked My Smart Bracelet. SecureList. Retrieved from https://securelist.com/blog/research/69369/how-i-hacked-my-smart-bracelet/
 
 ##### Android App - Brett
@@ -33,29 +56,77 @@ Unucheck, Roman (March 26, 2015). How I Hacked My Smart Bracelet. SecureList. Re
 
 - [Fitbit API Docs](https://dev.fitbit.com/docs/)
 - [Terms of use](https://dev.fitbit.com/terms/)
+- [Fitbit API Access using Oauth2.0](http://pdwhomeautomation.blogspot.co.uk/2016/01/fitbit-api-access-using-oauth20-and.html)
 - [Programmable Web Fitbit API](http://www.programmableweb.com/api/fitbit)
-- [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
 - [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
+
+##### Misc
+- [Fitbit in Academia](http://www.academia.edu/Documents/in/Fitbit)
+- [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
+- [Fitness trackers data leak](http://www.informationweek.com/mobile/fitbit-other-fitness-trackers-leak-personal-data-study/a/d-id/1324165)
+- [MIT Fitbit Hack](https://courses.csail.mit.edu/6.857/2014/files/17-cyrbritt-webbhorn-specter-dmiao-hacking-fitbit.pdf)
 
 ##### Technical Content
 
------------------------------------------------------------------------
-
 #### Fitbit Analysis
 
-Fitbit is a fitness tracker that allows a user to track his/her life with 
-the Fitbit's body sensors.
+Fitbit is a fitness tracker that allows a user to track his/her life with the Fitbit's body sensors. By using these sensors,
+the device can track various activities such as walking, running, and sleeping. Moreover, the Fitbit is a watch and alarm.
+The device can be paired to one's computer through a USB connection, or paired to one's phone app. A user can also view
+his/her Fitbit stats on their website.
+
+All the user's data is collected on the device until it is synced with either the Android, iOS, or desktop software.
+MIT students have found that no information persists on any of the devices, but instead gets data from Fitbit's cloud.
+
+Fitbit also encrypts transmitted data to its servers over HTTPS, unlike other competitors such as Garmin.
+But like many devices Fitbit exposes its Bluetooth information, thus potentially leaking data available to Bluetooth
+beacons typically set up in shopping malls to track customers. Apple addresses this issue (haha) by [randomizing their
+Bluetooth MAC address](http://www.informationweek.com/mobile/fitbit-other-fitness-trackers-leak-personal-data-study/a/d-id/1324165).
+
+##### Fitbit Surge Sensors and Components
+
+>   Sensors and Components
+    GPS.
+    3-axis accelerometers.
+    3-axis gyroscope.
+    Digital compass.
+    Optical heart rate monitor.
+    Altimeter.
+    Ambient light sensor.
+    Vibration motor.
+
+Source: [Fitbit](https://www.fitbit.com/surge)
+
+##### Fitbit Attack Vectors
+
+Like many mobile devices, Fitbit has a relatively large attack surface including:
+
+- **API Abuse**
+- **USB Connection**
+- **Bluetooth**
+- Software
+    - **Android App**
+    - iPhone App
+    - Fitbit device software
+- Wireless
+- Sensors
+- Hardware
 
 ##### Bug Bounty
 
 Fitbit has a [bug bounty program](https://bugcrowd.com/fitbit), but has 
-a large amount of restrictions (CSRF, XSS, SQL Injection).These attack vectors being in the OWASP Top 10, it is disappointing that Fitbit would not provide a bug bounty for these vectors since black hats may be less inclined to follow [Fitbit's Terms of Service](https://dev.fitbit.com/terms).
+a large amount of restrictions (CSRF, XSS, SQL Injection).These attack vectors being in the OWASP Top 10,
+it is disappointing that Fitbit would not provide a bug bounty for these vectors since black hats may be less
+inclined to follow [Fitbit's Terms of Service](https://dev.fitbit.com/terms).
 This may hinder white hats from finding vulnerabilities on Fitbit's platform.
 
-The window of compliance between these two sets of restrictions is slim,
-and difficult to perform a comprehensive web security analysis. 
+The window of compliance between these two sets of restrictions is slim, and difficult to perform a
+comprehensive web security analysis.
 
-[E-Commerce Platform Shopify](https://hackerone.com/shopify) has a much less restrictive bug bounty program, and in fact, encourages SQL Injection, CSRF, and XSS bounties.
+[E-Commerce Platform Shopify](https://hackerone.com/shopify) has a much less restrictive bug bounty program,
+and in fact, encourages SQL Injection, CSRF, and XSS bounties.
+
+---------------------------------------------------------------------------
 
 ##### API Attack Surface
 
@@ -145,8 +216,6 @@ We choose not to implement this method in order not cross the ethical guidelines
 
 ####  Python Fitbit Oauth
 
-[\[Fitbit\] Fitbit Api Access using Oauth2.0](http://pdwhomeautomation.blogspot.co.uk/2016/01/fitbit-api-access-using-oauth20-and.html)
-
 [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
 
 #### Data Collection
@@ -190,14 +259,72 @@ User Friends JSON example
  }
 ```
 
-
 -------------------------------------------------------------------------
 
+#### Bluetooth Attack Surface (Satoe)
+Similar to the API Attack Surface, spoofing Bluetooth pairing between a Fitbit device, and a laptop or mobile will allow the attacker to have access to vital signs, calories burned, sleep activity, geolocation, phone serial number IMEI Number, steps per interval, and
+reproductive health information.
+
+Fitbit typically syncs by connecting through Bluetooth to a device, which with Fitbit's software will sync with Fitbit's cloud.
+
+#### Bluetooth Motivation
+The attacker that has paired to the victim's Fitbit through Bluetooth,can not only gather information on the victim, but also manipulate the information stored on the device. Although damage is minimal, information leaks still violate users' privacy. It's also possible an attack could impersonate a user at this point.
+
+Bluetooth is most vulnerable for exploitation when it is not paired. Users may be trying to save battery or assume that once the Fitbit device is done syncing, they do not need to keep bluetooth enabled. However, the Fitbit device will revert to "advertising mode" and repeatedly emits a fixed signal and unique ID to alert the phone that it is waiting to re-establish a connection. During this 'advertising mode,' attackers are free to pair with the device and cause disturbance in re-establishing connection with the users' device.
+It is also possible that Bluetooth "beacons" in public areas could be used to identify the Fitbit, and thus track the user's physical location.
+
+#### Bluetooth Hacking
+
+Hacking Fitbit's Bluetooth is possible by forging its MAC address and replaying it, but only after gaining its key from
+the phone.
+
+##### Scanning
+Unucheck used ready code from Android SDK, which is an application to connect to Bluetooth LE devices.
+Kali Linux comes with Bluesnarfer, which scans bluetooth devices. This can be done with a bluetooth dongle by:
+
+    -hciconfig hci0
+    -hcitool scan hci0
+    -l2ping (device addr)
+
+##### Authentication
+In the real authentication process between the Fitbit device and the user, the Fitbit application uses one of the four service located in the wristband. To notify the Fitbit device of any changes made to the characteristic, each characteristic has a flag called 'CharacteristicNotification'. This also goes for the descriptors for each characteristics, with the flag 'ENABLE_NOTIFICATION_VALUE' .
+
+When one of the characteristics' value is changed through the byte buffer, the application reads the buffer containing the header and byte array and initializes a new array. This new array consists of a constant array within the application, followed by the header and byte array that it read from the buffer. The new array is MD5 hashed and sent to the Fitbit device, to which the device responds in this format.
+
+    -Header
+    -MD5
+    -Verification byte
+
+This will cause the Fitbit Device to vibrate and request the user to tap the screen to finish the authentication. Due to the fact that authentication requires just one tap from the user, one attack method could be to repeatedly try the authentication process within range.
+
+After the authentication is complete, data on the Fitbit device can be accessed. However, something to note is that once an hour the device transfers information to the cloud, which means some of the information going back may not be accessible.
+
+##### Potential Malicious Actions
+Aside from modifying data of steps and distances, Avrille claimed as a proof of concept that the attacker could inject a malicious code into the tracker which only required 10 seconds, with an verification time of 60 seconds (timed to a jog of the victim). Only the initial injection requires that the Fitbit device be near the attacker. The verification can happen even when the victim is out of reach.
+
+When the victim wants to synchronize their data to update their profile, the device will respond. However, added to the original message, the response will be infiltrated with the infected packet, which will then be delivered to the victim's laptop or mobile device. This could then start a back door and even infect other trackers.
+
+Although the payload is small, just a mere 17 bytes, it is enough for a Trojan such as the Crash Pentium Trojan in 2004, which only required 4 bytes.
+
+#### Fitbit's Reponse
+Fitbit claimed that these claims were false and cannot be reproduced.
+
+>On Wednesday October 21, 2015, reports began circulating in the media based on claims from security vendor, Fortinet, that Fitbit devices could be used to distribute malware. These reports are false. In fact, the Fortinet researcher, Axelle Apvrille who originally made these claims has confirmed to Fitbit that this was only a theoretical scenario and is not possible. Fitbit trackers cannot be used to infect user’s devices with malware. We want to reassure our users that it remains safe to use their Fitbit devices and no action is required.
+
+This does not instill a great amount of confidence in Fitbit's security procedure, as they seem to tend to ignore
+vulnerabilities.
+
+----------------------------------------------------------
 
 ##### Limitations
 
+###### API Scraping Limitations
 - The attacker would have to resort to traditional social
 engineering methods such as phishing to gain API access.
+
+- Due to Fitbit's Bug Bounty limitations, CSRF and XSS vulnerabilities may not be examined within strict ethical guidelines.
+  We suspect there are numerous CSRF and XSS vulnerabilities, due to Fitbit's desire to obfuscate them.
+  This may be why the MIT student researchers did not evaluate API vulnerabilities.
 
 ##### Results
 
@@ -210,12 +337,30 @@ With access to a user's heart-rate logs over time, an app could detect
 for heart abnormalities or more maliciously, an advertising agency
 may be able to use heart rate patterns to fingerprint a user between devices.
 
+This pertinent health information is not regulated by HIPAA, and thus companies are allowed
+to collect and distribute this data. It's possible this could lead to higher insurance rates if an insurer
+was aware that their customer is more susceptible to certain diseases or illnesses.
+
+[Even default privacy settings leak personal information such as one's sexual activity.](https://techcrunch.com/2011/07/03/sexual-activity-tracked-by-fitbit-shows-up-in-google-search-results/)
+
+If an attacker compromises the user's Fitbit device, or syncing device, then the attacker
+could gain real-time access to the user's Fitbit sensors. Since the Fitbit the worn constantly,
+the data from the Fitbit's sensors may be more accurate, or revealing than a phone's sensors.
+It may even be possible to track a user's literal step-by-step location by correlating data from
+the Fitbit's GPS, accelerometer, compass and altimeter.
+
 **As we attach ourselves to more bodily sensors, we expose more personal
 information online.** Personal information has been the new goldmine of the
 21st century, as seen by an overwhelming majority of technology companies
- such as Google, Facebook, Amazon, etc...
+such as Google, Facebook, Amazon, etc... Thus it is very likely that Fitbit is
+already profiting from its user data.
 
-##### Implications (besides access to basic user info)
+Technology wearables increase our attack surface. While cell-phones also contain accelerometers, the activity trackers are
+designed to stay on the user at all times, thus bridging the informational gap that adversaries may experience if only
+hacking one's phone. The proliferation of wearables along with competition between many firms, implies future fitness trackers will
+contain more sensors, thus providing additional attack vectors into our life.
+
+##### API Implications (besides access to basic user info)
 
     - Targeted advertising for medications based on user's heart rate and/or weight
     - Knowledge of possible heart conditions.
@@ -235,7 +380,7 @@ information online.** Personal information has been the new goldmine of the
 
 **Click the link below and look at your URL header for the code=..., then paste that into fitbit.CODE**
 
-1. First, Click the below Authorization URL:
+1. First, Click the below Authorization URL and login to your Fitbit Account:
 
 `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228349&redirect_uri=https%3A%2F%2Fjudgementalmom.com%2Ffitbit&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800`
 
@@ -272,52 +417,21 @@ Works only for authorization code flow!
 
 ##### Conclusions
 
-Fitbit should be more open to bug bounty collectors, otherwise malicious actors may exploit vulnerabilities instead. Fitbit brushes off "[theoretical vulnerabilities](https://community.fitbit.com/t5/Fitbit-com-Dashboard/Theoretical-bluetooth-vulnerability/td-p/995475)," which does not instill confidence in its security policies. Not enough people care about the personal information they are sending when using a wearable. The information can be used to fingerprint your future movements.
+Fitbit should be more open to bug bounty collectors, otherwise malicious actors may exploit vulnerabilities instead.
+Fitbit brushes off "[theoretical vulnerabilities](https://community.fitbit.com/t5/Fitbit-com-Dashboard/Theoretical-bluetooth-vulnerability/td-p/995475)," which does not instill confidence in its security policies. Not enough people care about the personal information they are sending when using a wearable.
+The information can be used to fingerprint your future movements.
+There is no way for users to download all of their collected information (which may be illegal in certain jurisdictions).
+The Fitbit Data Scraper may the closest thing a user could use to obtain his/her personal data.
 
+While Fitbit has a fairly large attack surface, it is not clear what vulnerabilities exist due to the back-and-forth
+between Fitbit employees and Fitbit hackers. Fitbit's Bug Bounty program should be extended to account for these unknown
+vulnerabilities. Unfortunately, due to the competition between fitness trackers, Fitbit may not have a significant
+amount of incentive for Fitbit to increase user security, and users also may not care if their data is leaked.
 
+Thus, as with most devices that generate an extensive amount of personal user information, there must
+tighter safeguards to limit the data that companies collect. Fitness trackers should be held to higher standards of
+privacy expectations. Users should also be able to access their own data, and be able to purge them from a service's database.
 
-#### Bluetooth Attack Surface
-Similar to the API Attack Surface, spoofing bluetooth pairing between a Fitbit device and a laptop or mobile will allow the attacker to have access to vital signs, calories burned, sleep activity, geolocation, phone serial number IMEI Number, steps per interval, and 
-reproductive health information. 
-
-#### Bluetooth Motivation
-The attacker that has paired to the victim's Fitbit through bluetooth, they can gather information on the victim, but also manipulate the information stored on the device. Although damage is minimal, information leaks still violate users' prviacy.
-
-Bluetooth is most vulnerable for exploitation when it is not paired. Users may be trying to save battery or assume that once the Fitbit device is done syncing, they do not need to keep bluetooth enabled. However, the Fitbit device will revert to "advertising mode" and repeatedly emits a fixed signal and unique ID to alert the phone that it is waiting to re-establish a connection. During this 'advertising mode,' attackers are free to pair with the device and cause disturbance in re-establishing connection with the users' device. 
-
-#### Bluetooth Hacking
-
-##### Scanning
-Unucheck used ready code from Android SDK, which is an application to connect to Bluetooth LE devices. 
-Kali Linux comes with Bluesnarfer, which scans bluetooth devices. This can be done with a bluetooth dongle by:
-
-    -hciconfig hci0
-    -hcitool scan hci0
-    -l2ping (device addr)
-
-##### Authentication
-In the real authentication process between the Fitbit device and the user, the Fitbit application uses one of the four service located in the wristband. To notify the Fitbit device of any changes made to the characteristic, each characteristic has a flag called 'CharacteristicNotification'. This also goes for the descriptors for each characteristics, with the flag 'ENABLE_NOTIFICATION_VALUE' .
-
-When one of the characteristics' value is changed through the byte buffer, the application reads the buffer containing the header and byte array and initializes a new array. This new array consists of a constant array within the application, followed by the header and byte array that it read from the buffer. The new array is MD5 hashed and sent to the Fitbit device, to which the device responds in this format.
-
-    -Header
-    -MD5
-    -Verification byte
-
-This will cause the Fitbit Device to vibrate and request the user to tap the screen to finish the authentication. Due to the fact that authentication requires just one tap from the user, one attack method could be to repeatedly try the authentication process within range. 
-
-After the authentication is complete, data on the Fitbit device can be accessed. However, something to note is that once an hour the device transfers information to the cloud, which means some of the information going back may not be accessible.
-
-##### Potential Malicious Actions
-Aside from modifying data of steps and distances, Avrille claimed as a proof of concept that the atacker could inject a malicious code into the tracker which only required 10 seconds, with an verification time of 60 seconds (timed to a jog of the victim). Only the initial injection requires that the Fitbit device be near the attacker. The verification can happen even when the victim is out of reach. 
-
-When the victim wants to syncrhonize their data to update their profile, the device will respond. However, added to the original message, the response will be infiltrated with the infected packet, which will then be delivered to the victim's laptop or mobile device. This could then start a back door and even infect other trackers. 
-
-Although the payload is small, just a mere 17 bytes, it is enough for a Trojan such as the Crash Pentium Trojan in 2004, which only required 4 bytes. 
-
-#### Fitbit's Reponse
-Fitbit claimed that these claims were false and cannot be reproduced.
-
->On Wednesday October 21, 2015, reports began circulating in the media based on claims from security vendor, Fortinet, that Fitbit devices could be used to distribute malware. These reports are false. In fact, the Fortinet researcher, Axelle Apvrille who originally made these claims has confirmed to Fitbit that this was only a theoretical scenario and is not possible. Fitbit trackers cannot be used to infect user’s devices with malware. We want to reassure our users that it remains safe to use their Fitbit devices and no action is required.
-
-
+All-in-all, Fitbit has reasonable security compared to other fitness tracker competitors. Its security is not perfect,
+and fitness trackers are expected to become replaced by smart watches, which may be created by companies such as Apple,
+with a larger security base.
