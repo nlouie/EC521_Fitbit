@@ -314,7 +314,22 @@ Fitbit claimed that these claims were false and cannot be reproduced.
 This does not instill a great amount of confidence in Fitbit's security procedure, as they seem to tend to ignore
 vulnerabilities.
 
+-------------------------------------------------------------------------
+
+#### USB Attack Surface
+Every Fitbit model is charged through a USB cable, some models also require synchronization through a USB dongle. One possible area of a USB attack is infecting a computer from a Fitbit that has previously been infected wirelessly. The proof-of-concept vulnerability research shows that in close range (Bluetooth range) an attacker can wirelessly inject malicious code into the Fitbit, which then infects a PC or other devices that the Fitbit connects to via USB.
+
+
+#### USB Hacking
+According to the Senior Fortinet researcher Axelle Apvrille, the attacker does not need physical access to the tracker, a close range is enough. It does not even matter if the Fitbit is paired with another device or not. Within the Bluetooth range, the device can be infected and then potentially install a virus, Trojan or other vulnerability to the computer days later when charging the device or synchronizing. Because all Fitbits require charging and synchronization through USB, this becomes a huge vulnerability. 
+
+
+#### Fitbit’s Response
+
+In defense, Fitbit said that "we believe that security issues reported today are false, and that Fitbit devices can't be used to infect users with malware." It said that while Fortinet did contact them to report a "low-severity issue," there was no indication it could be used to distribute malware. 
+
 ----------------------------------------------------------
+
 #### Android App Attack Surface
 The Fitbit Android app allows users to view the data their Fitbit wearable tracks. This data includes both the backlogged data that gets sent to Fitbit's servers, and live data that is viewable only from the app. A user can also find friends who have Fitbits by searching through their Google or Facebook contacts if the user chooses to link those accounts to their Fitbit account.
 
