@@ -37,6 +37,8 @@ found in our searches. The MIT research mentioned API vulnerabilities as an area
 
 ##### USB - Inna
 - [Sample USB Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
+- [Fortinet's Research](https://www.engadget.com/2015/10/21/fitbit-tracker-bluetooth-vulnerability/)
+- [Fitbit's Response](http://www.computerworld.com/article/2997561/cybercrime-hacking/researcher-says-fitbit-can-be-wirelessly-hacked-to-infect-pcs-fitbit-says-not-true.html)
 
 ##### Bluetooth - Satoe
 - [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf)
