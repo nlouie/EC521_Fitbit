@@ -32,6 +32,8 @@ do not have permission to use.
 
 More info about authentication: https://dev.fitbit.com/docs/oauth2/
 
+This script is used in github.com/nlouie/judgemental-mom as part of our proof of concept.
+
 """
 
 
