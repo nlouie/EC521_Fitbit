@@ -37,6 +37,8 @@ found in our searches. The MIT research mentioned API vulnerabilities as an area
 
 ##### USB - Inna
 - [Sample USB Hack](http://gizmodo.com/hackers-can-wirelessly-upload-malware-to-a-fitbit-in-10-1737880606)
+- [Fortinet's Research](https://www.engadget.com/2015/10/21/fitbit-tracker-bluetooth-vulnerability/)
+- [Fitbit's Response](http://www.computerworld.com/article/2997561/cybercrime-hacking/researcher-says-fitbit-can-be-wirelessly-hacked-to-infect-pcs-fitbit-says-not-true.html)
 
 ##### Bluetooth - Satoe
 - [The Citizen Lab Bluetooth Vulnerability Assessment](https://openeffect.ca/reports/Every_Step_You_Fake.pdf)
@@ -51,6 +53,9 @@ Unucheck, Roman (March 26, 2015). How I Hacked My Smart Bracelet. SecureList. Re
 
 ##### Android App - Brett
 - [Reverse-Engineering an Android App](http://securitywatch.pcmag.com/mobile-security/321138-rsac-reverse-engineering-an-android-app-in-five-minutes)
+- [Apktool](https://ibotpeaches.github.io/Apktool/)
+- [Apkmirror](http://www.apkmirror.com/)
+- [Jadx](http://www.javadecompilers.com/apk)
 
 ##### API - Nick
 
@@ -314,7 +319,69 @@ Fitbit claimed that these claims were false and cannot be reproduced.
 This does not instill a great amount of confidence in Fitbit's security procedure, as they seem to tend to ignore
 vulnerabilities.
 
+-------------------------------------------------------------------------
+
+#### USB Attack Surface
+Every Fitbit model is charged through a USB cable, some models also require synchronization through a USB dongle. One possible area of a USB attack is infecting a computer from a Fitbit that has previously been infected wirelessly. The proof-of-concept vulnerability research shows that in close range (Bluetooth range) an attacker can wirelessly inject malicious code into the Fitbit, which then infects a PC or other devices that the Fitbit connects to via USB.
+
+
+#### USB Hacking
+According to the Senior Fortinet researcher Axelle Apvrille, the attacker does not need physical access to the tracker, a close range is enough. It does not even matter if the Fitbit is paired with another device or not. Within the Bluetooth range, the device can be infected and then potentially install a virus, Trojan or other vulnerability to the computer days later when charging the device or synchronizing. Because all Fitbits require charging and synchronization through USB, this becomes a huge vulnerability. 
+
+
+#### Fitbit’s Response
+
+In defense, Fitbit said that "we believe that security issues reported today are false, and that Fitbit devices can't be used to infect users with malware." It said that while Fortinet did contact them to report a "low-severity issue," there was no indication it could be used to distribute malware. 
+
 ----------------------------------------------------------
+
+#### Android App Attack Surface
+The Fitbit Android app allows users to view the data their Fitbit wearable tracks. This data includes both the backlogged data that gets sent to Fitbit's servers, and live data that is viewable only from the app. A user can also find friends who have Fitbits by searching through their Google or Facebook contacts if the user chooses to link those accounts to their Fitbit account.
+
+####Android App Motivation
+The Fitbit Android app has been downloaded somewhere between 10,000,000 and 50,000,000 times according to the Google Play Store. This means that a vulnerability found in the app could affect tens of millions of people. Additionally, Android apps can be reverse-engineered more easily than iOS apps, as there are many easy-to-use, publicly available decompilers.
+Our motivation for reverse-engineering the Fitbit Android app is to both search for any possible vulnerabilities, and to try editing the app in a way that would create a vulnerability for someone who would install the modified version.
+
+####Android App Hacking
+First we have to acquire the apk file for Fitbit's app. There are several ways to get this, but the easiest is to download it using [apkmirror](http://www.apkmirror.com/).
+
+There are two processes that should be done to reverse-engineer an Android app:
+
+- Decompile the apk into smali, which is like assembly code for java files. Make any desired changes to the smali code, and compile it back into an apk to run on an Android device. This can be done using *apktool* which is built into Kali Linux.
+
+1. `apktool d <path to fitbit.apk>`
+This will decompile the apk into smali files, and will create a directory called "fitbit" in the working directory to contain these files. It does this using baksmali (also built into Kali Linux) on the classes.dex files which can be found in the root directory of the apk. 
+Every Android app has a classes.dex file which contains the compiled machine code for app. In the case of the most recent version of fitbit's apk, there are two classes.dex files: classes.dex and classes2.dex. When multiple dex files are present, this is called "multidex", and is used in the case that the app is very large. 
+Inside the new fitbit directory there are two directories containing the smali code: smali and smali_classes2. Any modifications the hacker desires to make should be made to the files in those directories.
+2. `apktool b fitbit`
+Two new directories will be created in the fitbit directory: build and dist. They contain the unzipped and zipped versions respectively of the modified fitbit.apk.
+3. `keytool -genkey -v -keystore <key name>.keystore -alias <alias name> -keyalg RSA -keysize 2048 -validity 10000 `
+This creates a key to sign the modified apk. Without this step and the next, the phone will see the package as corrupt when installing. This step only needs to be done once, as the key can be reused.
+4. `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore <key name>.keystore fitbit/dist/fitbit.apk <alias_name>`
+This signs the apk.
+5. `zipalign -f -p 4 fitbit/dist/fitbit.apk fitbit/dist/fitbit-aligned.apk`
+This zipaligns the apk, aligned at 4 bytes.
+6. Now the apk can be transferred to an Android phone and installed via a file explorer.
+- Convert the apk to java code. This won't be fully working java code, but will be more readable than the smali code and will help in understanding what the code does. The easiest way to do this is to use an online decompiler such as [Jadx](http://www.javadecompilers.com/apk). The result will be a downloadable zip file of java code with the same file names as the smali files.
+
+####Modifying the Android app
+The first modification that needs to be made is to enable debugging mode. This allows one to view log messages made by the Fitbit app in the Android Monitor in Android Studio. To do this, open the AndroidManifest.xml file within the fitbit directory created by apktool. Add `android:debuggable="true"` anywhere within the `<application/>` tag.
+While there are some log messages already, they aren't particularly revealing. To add a log message of our own, we need to write smali code to mimic this Java function call: `Log.d("TAG", "Message");`
+We can do this: 
+`const-string v0, "TAG"
+const-string v1, "Message"
+invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I` 
+A quick test to make sure that the log can be seen is to add these lines inside the onCreate call in the MainActivity.smali file, found in fitbit/smali/com/fitbit. This log now appears after signing in to the app and selecting "Try a preview of the new dashboard". 
+If a log message is placed in the code for an activity that has sensitive data, one can view that data in the Android Monitor. All that needs to be done is to find a page that collects or displays that data, and replace `v1` with that data. Such data that could be sensitive consists of usernames and passwords, heart rate, food/water intake, sleep schedule, names of friends, distance walked, and more.
+While this data can be logged easily in the Android Monitor, a hacker would need access to the victim's device in order to connect it to Android Studio. A much more interesting scenario would be to write smali code to send that sensitive data to the Hacker in some way. As writing smali code is hard, a better approach would be to write an Android app that sends data, and then use apktool as described above in order to see how that code would be done in smali, and then make the necessary modifications to the fitbit smali code.
+Now all that needs to be done is to convince someone to install the modified fitbit.apk instead of from the Play Store. This can be done using social engineering among various other methods, such as uploading the modified fitbit.apk to a third party app store.
+
+####Miscellaneous interesting information found in the Android app
+
+- The Google Maps API Key can be found in the AndroidManifest.xml file. It is: `AIzaSyCTYIpQi6kwi2Fw6yEskBVS25-lZ0iZ-zU`
+
+
+-------------------------------------------------------------------------
 
 ##### Limitations
 
@@ -404,7 +471,7 @@ That is, unless a MITM sends you an alternate, working key...
 
 You should see the extraction results in output.txt and in your console.
 
-If you recieve an error with oauth then the token may be expired.
+If you receive an error with oauth then the token may be expired.
     
 ##### Disclaimer 
 
