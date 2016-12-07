@@ -166,16 +166,22 @@ User Friends JSON example
 The privacy implications of fitness trackers have not been evaluated as
 much as older technologies...
 
-With access to a user's heart-rate logs over time, an app could detect
+With access to a user's heart-rate logs over time via the API, an app could detect
 for heart abnormalities or more maliciously, an advertising agency
 may be able to use heart rate patterns to fingerprint a user between devices.
+
+If an attacker compromises the user's Fitbit device, or syncing device, then the attacker
+could gain real-time access to the user's Fitbit sensors. Since the Fitbit the worn constantly,
+the data from the Fitbit's sensors may be more accurate, or revealing than a phone's sensors.
+It may even be possible to track a user's precise location to the step by correlating data from
+the Fitbit's accelerometer and compass, along with the Phone's GPS location
 
 **As we attach ourselves to more bodily sensors, we expose more personal
 information online.** Personal information has been the new goldmine of the
 21st century, as seen by an overwhelming majority of technology companies
  such as Google, Facebook, Amazon, etc...
 
-##### Implications (besides access to basic user info)
+##### API Implications (besides access to basic user info)
 
     - Targeted advertising for medications based on user's heart rate and/or weight
     - Knowledge of possible heart conditions.
@@ -183,6 +189,8 @@ information online.** Personal information has been the new goldmine of the
     - A user's habits are valuable information for criminals (activity and sleep logs)
     - Targeted advertising based on user's foods.
     - What the user eats => What the user does **not** eat. Knowledge of diet restrictions is valuable information.
+
+### Fitbit Scraper
 
 #### Requirements
 
@@ -221,19 +229,12 @@ If you recieve an error with oauth then the token may be expired.
 
 ##### Disclaimer 
 
-This is for use by Team members only. If you would like to use this for your own Fitbit app, simply replace your authorization code in global_headers,
+This is for use by Team members only. If you would like to use this for your own Fitbit app,
+simply replace your authorization code in global_headers,
 and your redirect_uri in oauth_request_data.
 
-When you run this, you are using this script at your own discretion. We hold no warranty for this script. If you are not redirecting to a secure server (if no https), then you may expose your sensitive information because this app requests for a maximum amount of informational access to your Fitbit account. If you redirect to an unencrypted connection, there is absolutely no guarantee of privacy.
+When you run this, you are using this script at your own discretion. We hold no warranty for this script.
+If you are not redirecting to a secure server (if no https), then you may expose your sensitive information because this app requests for a maximum amount of informational access to your Fitbit account. If you redirect to an unencrypted connection, there is absolutely no guarantee of privacy.
 
 Works only for authorization code flow!
-
-#### Resources
-
-- [API Docs](https://dev.fitbit.com/docs/)
-- [Fitbit oauth](https://dev.fitbit.com/docs/oauth2/)
-- [Programmable Web Fitbit API](http://www.programmableweb.com/api/fitbit))
-- [Terms of use](https://dev.fitbit.com/terms/)
-- [Fitbit Scraper Example](https://cran.cnr.berkeley.edu/web/packages/fitbitScraper/)
-- [OWASP API Abuse](https://www.owasp.org/index.php/Category:API_Abuse)
 

@@ -17,15 +17,9 @@ Works only for authorization code flow!
 
 Usage:
 
-Click the below Authorization URL:
+Follow the below Authorization URL, login to your Fitbit account, and copy the in your URL header after it redirects you:
 
-https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228349&redirect_uri=https%3A%2F%2Fjudgementalmom.com%2Ffitbit&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800
-
-or make a curl
-
-curl -X POST -i -H 'Authorization: Basic MjI4MzQ5OjdkMzJmMDMwNzRhMmQ5ODJkNjM3ZjhhYjFhZjBiNmZl' -H 'Content-Type: application/x-www-form-urlencoded' -d "clientId=228349" -d "grant_type=authorization_code" -d "redirect_uri=https%3A%2F%2Fjudgementalmom.com%2Ffitbit" -d "code=0716ea988383f3c400e21adbfe70902293218dcc" https://api.fitbit.com/oauth2/token
-
-The authorization links to my shared hosting, but will return a 500 error. Look at your URL header to see your code!!!
+https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228349&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Ffitbit&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800
 
 This is for use by Team members only.
 If you would like to use this for your own Fitbit app, simply replace your authorization code in global_headers,
@@ -36,9 +30,7 @@ redirecting to a secure server (if no https), then you may expose your sensitive
 a maximum amount of informational access to your fitbit account. You should never use this on anyone's account you
 do not have permission to use.
 
-More info about authentication:
-
-https://dev.fitbit.com/docs/oauth2/
+More info about authentication: https://dev.fitbit.com/docs/oauth2/
 
 """
 
@@ -55,7 +47,7 @@ from json import load, dumps
 
 # secrets are no fun
 # !!!!!!!!!!!!!!!!!!!!  COPY HERE !!!!!!!!!!!!!!!
-CODE = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # copy your code here if you want extract yourself!!!!! :D
+CODE = ""  # copy your code here if you want extract yourself!!!!! :D
 CLIENT_SECRET = load(open('auth.json', 'r'))['fitbit-secret']
 
 # final extracted returned data
@@ -72,7 +64,7 @@ global_headers = {
 oauth_request_data = {
   'clientId': load(open('auth.json', 'r'))['client-id'],
   'grant_type': 'authorization_code',
-  'redirect_uri': 'https://judgementalmom.com/fitbit',
+  'redirect_uri': 'http://localhost:5000/fitbit',
   'code': CODE
 }
 
@@ -85,11 +77,13 @@ oauth_request_data = {
 # provided endpoint
 EXTRACTION_URLS = {
     'user_data': 'https://api.fitbit.com/1/user/{0}/profile.json',
-    'body_data': 'https://api.fitbit.com/1/user/{0}/body/log/fat/date/2016-10-30.json',
+    'body_data': 'https://api.fitbit.com/1/user/{0}/body/log/fat/date/2016-12-02.json',
     'devices_data': 'https://api.fitbit.com/1/user/{0}/devices.json',
-    'weight_data': 'https://api.fitbit.com/1/user/{0}/body/log/weight/date/2016-10-30.json',
-    'food_data': 'https://api.fitbit.com/1/user/{0}/foods/log/date/2016-10-30.json',
-    'friends_data': 'https://api.fitbit.com/1/user/[user-id]/friends.json',
+    'weight_data': 'https://api.fitbit.com/1/user/{0}/body/log/weight/date/2016-12-02.json',
+    'food_data': 'https://api.fitbit.com/1/user/{0}/foods/log/date/2016-12-02.json',
+    'friends_data': 'https://api.fitbit.com/1/user/{0}/friends.json',
+    'sleep_data': 'https://api.fitbit.com/1/user/{0}/sleep/date/2016-12-02.json',
+    'heart_data': 'https://api.fitbit.com/1/user/{0}/activities/heart/date/today/1d.json'
 }
 
 # ----------------- FUNCTIONS --------------------------------------------#
@@ -169,10 +163,6 @@ def main():
             f.write(str(dumps(FINAL_OUTPUT, sort_keys=True, indent=4)))
     else:
         print('error in oauth', oauth_data)
-
-# basic security
-if not oauth_request_data['redirect_uri'].startswith("https://"):
-    raise Exception("NOPE")
 
 main()
 
