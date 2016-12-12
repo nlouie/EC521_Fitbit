@@ -5,7 +5,7 @@
 [Fitbit Cyber Project on Github](https://github.com/ssakuma4593/EC521_Fitbit)
 
 ### Created: 11/27/16
-### Last Updated: 11/28/16
+### Last Updated: 12/12/16
 
 ### Background
 
